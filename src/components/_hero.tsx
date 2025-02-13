@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "./ui/button";
 import Image from "next/image";
+import Link from "next/link";
 
 function Hero() {
   return (
@@ -25,8 +26,9 @@ function Hero() {
           className="mt-5 bg-indigo-500 hover:bg-indigo-500
         w-full md:w-auto
         "
+          asChild
         >
-          See Collections
+          <Link href={"#collection"}>See Collections</Link>
         </Button>
       </div>
       <div className="flex flex-1 justify-center h-full">

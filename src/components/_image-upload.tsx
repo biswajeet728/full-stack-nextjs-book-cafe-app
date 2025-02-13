@@ -36,15 +36,28 @@ const authenticator = async () => {
 };
 
 interface Props {
-  type: "Sign_In" | "Sign_Up";
+  type: "Sign_In" | "Sign_Up" | "Create_Book";
   formKey: string;
   onValueChange: (value: string) => void;
+  accept: string;
+  folder: string;
+  placeHolder?: string;
 }
 
-function ImageUpload({ formKey, type, onValueChange }: Props) {
+function ImageUpload({
+  formKey,
+  type,
+  onValueChange,
+  accept,
+  folder,
+  placeHolder,
+}: Props) {
   const ikUploadRef = useRef(null);
   const [uploading, setUploading] = useState(false);
-  const [file, setFile] = useState<{ filePath: string } | null>(null);
+  const [file, setFile] = useState<{
+    filePath: string;
+    fileType?: string;
+  } | null>(null);
 
   const onError = (error: any) => {
     console.log(error);
@@ -64,7 +77,7 @@ function ImageUpload({ formKey, type, onValueChange }: Props) {
     onValueChange(res.url);
 
     toast({
-      title: `Image uploaded successfully`,
+      title: `File uploaded successfully`,
     });
   };
 
@@ -79,10 +92,17 @@ function ImageUpload({ formKey, type, onValueChange }: Props) {
         onError={onError}
         onSuccess={onSuccess}
         useUniqueFileName={true}
-        folder={"users"}
-        accept={"image/*"} // accept only image files
+        folder={folder}
+        accept={accept} // accept only image files
         className="hidden"
-        onUploadStart={() => setUploading(true)}
+        onUploadStart={() => {
+          setUploading(true);
+
+          toast({
+            title: "Uploading file....",
+            description: `Your File is being uploaded. Please wait.`,
+          });
+        }}
         disabled={uploading}
       />
 
@@ -104,15 +124,37 @@ function ImageUpload({ formKey, type, onValueChange }: Props) {
         </button>
       )}
 
+      {type === "Create_Book" && (
+        <button
+          type="button"
+          className="p-2 flex items-center gap-2"
+          onClick={() => {
+            if (ikUploadRef.current) {
+              // @ts-ignore
+              ikUploadRef.current.click();
+            }
+          }}
+        >
+          <Paperclip size={16} className="text-white text-opacity-40" />
+          <label className="text-white text-opacity-40 text-sm cursor-pointer">
+            {file?.fileType === "non-image" ? file.filePath : placeHolder}
+          </label>
+        </button>
+      )}
+
       <div className="mx-2">
         {file && (
-          <IKImage
-            alt={file.filePath!}
-            path={file.filePath!}
-            width={500}
-            height={300}
-            className="rounded-lg w-1/3 h-1/3 object-cover self-center"
-          />
+          <>
+            {file.fileType === "image" ? (
+              <IKImage
+                alt={file.filePath!}
+                path={file.filePath!}
+                width={500}
+                height={300}
+                className="rounded-lg w-1/3 h-1/3 object-cover self-center"
+              />
+            ) : null}
+          </>
         )}
       </div>
     </ImageKitProvider>

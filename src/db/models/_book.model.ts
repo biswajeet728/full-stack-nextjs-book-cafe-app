@@ -22,6 +22,11 @@ export const bookSchema = new mongoose.Schema<IBook>({
     type: String,
     required: true,
   },
+  authorId: {
+    type: String,
+    required: true,
+    ref: "User",
+  },
   genre: {
     type: String,
     required: true,

@@ -18,6 +18,14 @@ export interface IBook {
   description: string;
   pdfFile: string;
   author: string;
+  authorId: string;
   genre: string;
   isNewBook: boolean;
+}
+
+export interface IBookDetails {
+  bookData: IBook | null;
+  setBookData: React.Dispatch<React.SetStateAction<IBook | null>>;
+  isExpanded: boolean;
+  setIsExpanded: React.Dispatch<React.SetStateAction<boolean>>;
 }

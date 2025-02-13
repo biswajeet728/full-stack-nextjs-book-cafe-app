@@ -91,6 +91,8 @@ const AuthForms = <T extends FieldValues>({
                     <ImageUpload
                       formKey={key}
                       type={type}
+                      accept="image/*"
+                      folder="users"
                       onValueChange={(value) => {
                         console.log(value, "val");
                         form.setValue(

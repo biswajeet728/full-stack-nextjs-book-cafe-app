@@ -5,10 +5,16 @@ import { Input } from "./ui/input";
 import { RxMagnifyingGlass } from "react-icons/rx";
 import { getAllBooks } from "@/lib/actions/book.action";
 import { IBook } from "@/types";
+import BookDetails from "./_book-details-dialog";
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "./ui/dialog";
+import { Button } from "./ui/button";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 function SearchBar() {
   const [query, setQuery] = useState("");
   const [books, setBooks] = useState<IBook[]>([]);
+  const [bookData, setBookData] = React.useState<IBook | null>(null);
+  const [isExpanded, setIsExpanded] = React.useState(false);
 
   const searchBooks = async () => {
     try {
@@ -36,22 +42,47 @@ function SearchBar() {
         onChange={(e) => setQuery(e.target.value)}
       />
 
-      {query && books.length > 0 && (
-        <div className="bg-dark-200 bg-opacity-95 absolute w-full top-10 rounded-sm z-10!">
-          {books.map((book: IBook, index: number) => (
-            <div
-              key={index}
-              className="p-2 border-b border-dark-300 cursor-pointer"
-            >
-              <p className="text-white text-[12px] md:text-sm">{book.title}</p>
-              <small className="text-xs md:text-sm text-slate-100 mt-2 inline-block opacity-65">
-                <span className="text-slate-100 opacity-65">Author:</span>{" "}
-                {book.author}
-              </small>
-            </div>
-          ))}
-        </div>
-      )}
+      <Dialog
+        open={!!bookData}
+        onOpenChange={(isOpen) => !isOpen && setBookData(null)}
+      >
+        {books.length > 0 && (
+          <div className="bg-dark-200 bg-opacity-95 absolute w-full top-10 rounded-sm z-10!">
+            {books.map((book: IBook, index: number) => (
+              <DialogTrigger asChild key={index}>
+                <div
+                  key={index}
+                  className="p-2 border-b border-dark-300 cursor-pointer"
+                  onClick={(e) => {
+                    setBookData(book);
+                    setBooks([]);
+                  }}
+                >
+                  <p className="text-white text-[12px] md:text-sm">
+                    {book.title}
+                  </p>
+                  <small className="text-xs md:text-sm text-slate-100 mt-2 inline-block opacity-65">
+                    <span className="text-slate-100 opacity-65">Author:</span>{" "}
+                    {book.author}
+                  </small>
+                </div>
+              </DialogTrigger>
+            ))}
+          </div>
+        )}
+        <DialogContent className="w-full max-w-[calc(100%-32px)] md:max-w-[800px] p-2 bg-dark-200 border-dark-200">
+          <VisuallyHidden>
+            <DialogTitle>Check This Out</DialogTitle>
+          </VisuallyHidden>
+
+          <BookDetails
+            bookData={bookData}
+            setBookData={setBookData}
+            isExpanded={isExpanded}
+            setIsExpanded={setIsExpanded}
+          />
+        </DialogContent>
+      </Dialog>
     </React.Fragment>
   );
 }

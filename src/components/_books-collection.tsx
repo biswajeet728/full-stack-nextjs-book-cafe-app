@@ -12,8 +12,10 @@ import {
   SelectValue,
 } from "./ui/select";
 import BookCard from "./_book-card";
+import { Button } from "./ui/button";
+import { Session } from "next-auth";
 
-function BookCollection({ books }: { books: IBook[] }) {
+function BookCollection({ books, user }: { books: IBook[]; user: Session }) {
   const getAllGenres = [...new Set(books.map((book) => book.genre))];
   const [selectedGenre, setSelectedGenre] = React.useState<string>("");
 
@@ -50,11 +52,25 @@ function BookCollection({ books }: { books: IBook[] }) {
             </SelectContent>
           </Select>
         </div>
+
+        {selectedGenre && (
+          <Button
+            className="bg-red-500 hover:bg-red-600"
+            size={"sm"}
+            onClick={() => setSelectedGenre("")}
+          >
+            Clear Filters
+          </Button>
+        )}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-5 gap-8 mt-8">
         {filteredBooks.map((book: IBook, index: number) => (
-          <BookCard key={index} book={book} />
+          <BookCard
+            key={index}
+            book={book}
+            userId={user ? user.user?.id : ""}
+          />
         ))}
       </div>
     </section>

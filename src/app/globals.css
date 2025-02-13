@@ -77,6 +77,11 @@
   }
 }
 
+*,
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   @apply bg-dark-100;
 }

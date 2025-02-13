@@ -11,8 +11,8 @@ const geistSans = Nunito_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Book Cafe",
-  description: "A simple book cafe",
+  title: "Book Cafe - A simple book cafe",
+  description: "A simple book cafe to showcase Next.js features",
 };
 
 export default async function RootLayout({

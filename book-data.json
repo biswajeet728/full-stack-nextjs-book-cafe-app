@@ -5,8 +5,9 @@
     "description": "Huck Finn befriends Jim, a runaway slave, and the two travel down the Mississippi River on a raft and share many interesting experiences along the way. The story is full of humor, adventure, and social criticism. The novel is a sequel to The Adventures of Tom Sawyer.",
     "pdfFile": "https://ik.imagekit.io/d39hnppcd/books/book-1/HuckFinn.pdf?updatedAt=1739360871278",
     "author": "Mark Twain",
+    "authorId": "67abb7b09f4d740ffc837fa9",
     "genre": "advanture",
-    "isNew": false
+    "isNewBook": false
   },
   {
     "title": "Rewire Your Mind: Neuroplasticity Techniques for Lasting Change and Growth",
@@ -14,8 +15,9 @@
     "description": "Neuroplasticity, the brain's remarkable ability to reorganize itself by forming new neuralconnections throughout life, serves as a cornerstone for personal development andtransformation. For real estate agents, business owners, doctors, lawyers, personaltrainers, and individuals in various walks of life, understanding this concept is essential inembracing change and fostering a growth mindset. By recognizing that the brain is notstatic but instead adaptable, we can leverage this knowledge to shape our thoughts,beliefs, and behaviors. This understanding empowers us to break free from limitingbeliefs and cultivate a more resilient and flexible approach to our challenges.",
     "pdfFile": "https://ik.imagekit.io/d39hnppcd/books/book-2/pdf.pdf?updatedAt=1739361066337",
     "author": "Donald Lewis",
+    "authorId": "67acf5683bb39a8a55ba3227",
     "genre": "Self-Inprovement",
-    "isNew": true
+    "isNewBook": true
   },
   {
     "title": "Beauty of Areas",
@@ -23,8 +25,9 @@
     "description": "Welcome to Sleeping Beauty Inc. The books can be read in any order.Book One: Rose Red - You can't buy a girl! But in the year 2214, you can. She can whip you into shape, design your diet, be your personal stylist, and turn you from geek to chic in just one year. What will happen if your model isn't what they promised?Book Two: Sleeping Prince - Gage is a solarship pilot who transports Sleeping Beauty Inc. models between the moons of Jupiter. His favorite is a model named Iona. She has a contract for him. Dare he refuse?Book Three: Beauty of Ares - Tired of hiring temporary models? Why not try an arranged marriage through Sleeping Beauty Inc.'s Gold Edition catalog? Look no further than Lisbet. Travel with her to Mars, the place most feared by models from Sleeping Beauty Inc.",
     "pdfFile": "https://ik.imagekit.io/d39hnppcd/books/book-3/pdf.pdf?updatedAt=1739361080101",
     "author": "Stephanie Van Orman",
+    "authorId": "67abb7b09f4d740ffc837fa9",
     "genre": "romance",
-    "isNew": true
+    "isNewBook": true
   },
   {
     "title": "The Land of Umbrellas",
@@ -32,8 +35,9 @@
     "description": "Lindsay Thomas wanted to be an actress, but that mostly meant 'acting' like she had her life together. When she gets an opportunity to help one of her acting buddies renovate a hotel for the winter, she moves to Vancouver Island to get a fresh start in a place where it rains all the time and where umbrellas keep popping up to keep her dry.",
     "pdfFile": "https://ik.imagekit.io/d39hnppcd/books/book-4/pdf.pdf?updatedAt=1739361090938",
     "author": "Stephanie Van Orman",
+    "authorId": "67acf5683bb39a8a55ba3227",
     "genre": "romance",
-    "isNew": true
+    "isNewBook": true
   },
   {
     "title": "Eternal Dose",
@@ -41,8 +45,9 @@
     "description": "In a world where love transcends the boundaries of life and death, Ethan`s heart is shattered by the sudden loss of his soulmate, Liam. As an artist, Ethan once saw the world in vibrant colors, but now his life is painted in shades of grief and despair. When a mysterious pill offers him a chance to reunite with Liam in a dream-like realm, Ethan is willing to pay any price to feel his lover`s touch once more",
     "pdfFile": "https://ik.imagekit.io/d39hnppcd/books/book-5/pdf.pdf?updatedAt=1739361111354",
     "author": "MIKE N. STEVENS",
+    "authorId": "67abb7b09f4d740ffc837fa9",
     "genre": "romance",
-    "isNew": false
+    "isNewBook": false
   },
   {
     "title": "I Woke Next To The Corpse",
@@ -50,7 +55,8 @@
     "description": "Minorly and disinterestedly connected sap is set up for a murder. Waiting for death to arrive, he drifts through various thoughts including but not only who may have been responsible for his demise.",
     "pdfFile": "https://ik.imagekit.io/d39hnppcd/books/book-6/pdf.pdf?updatedAt=1739361125009",
     "author": "Edward Drobinski",
+    "authorId": "67abb7b09f4d740ffc837fa9",
     "genre": "mystry",
-    "isNew": false
+    "isNewBook": false
   }
 ]
