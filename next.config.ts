@@ -19,7 +19,7 @@ const nextConfig: NextConfig = {
   webpack: (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,
-      mongoose: false, // Exclude mongoose from client/Edge bundles
+      mongoose: false,
     };
     return config;
   },
