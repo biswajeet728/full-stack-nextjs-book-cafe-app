@@ -12,7 +12,7 @@ import { revalidatePath } from "next/cache";
 export const seedBooks = async () => {
   try {
     await connectToDB();
-    const res = await Book.insertMany(dummyBooks);
+    await Book.insertMany(dummyBooks);
 
     return {
       success: true,
@@ -30,7 +30,7 @@ export const getAllBooks = async (query?: string) => {
   try {
     await connectToDB();
 
-    let books = []; // ✅ Convert to plain JSON
+    let books = [];
 
     if (query) {
       books = await Book.find({
@@ -42,7 +42,6 @@ export const getAllBooks = async (query?: string) => {
       books = _.shuffle(books);
     }
 
-    // 🔥 Ensure `_id` is a string and remove potential Mongoose metadata
     const serializedBooks = (books as unknown as IBook[]).map(
       (book: IBook) => ({
         ...book,
@@ -52,7 +51,7 @@ export const getAllBooks = async (query?: string) => {
 
     return {
       success: true,
-      books: serializedBooks, // ✅ Now it's fully serializable
+      books: serializedBooks,
     };
   } catch (error) {
     console.error("Books All Error:", error);

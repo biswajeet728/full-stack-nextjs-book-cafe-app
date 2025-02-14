@@ -93,7 +93,7 @@ function ImageUpload({
         onSuccess={onSuccess}
         useUniqueFileName={true}
         folder={folder}
-        accept={accept} // accept only image files
+        accept={accept}
         className="hidden"
         onUploadStart={() => {
           setUploading(true);

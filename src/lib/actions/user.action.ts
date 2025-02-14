@@ -43,7 +43,6 @@ export async function signUpHandler(params: any) {
   try {
     await connectToDB();
 
-    // find user by email
     const user = await User.findOne({ email });
 
     if (user) {
@@ -53,10 +52,8 @@ export async function signUpHandler(params: any) {
       };
     }
 
-    // hash password
     const hashedPassword = await bcrypt.hash(String(password), 12);
 
-    // create new user
     const newUser = new User({
       username,
       email,

@@ -1,7 +1,4 @@
-import Link from "next/link";
 import React from "react";
-import { MdOutlineBook } from "react-icons/md";
-import { RxMagnifyingGlass } from "react-icons/rx";
 import SearchBar from "./_search";
 import UserBox from "./_user-box";
 import Logo from "./_logo";

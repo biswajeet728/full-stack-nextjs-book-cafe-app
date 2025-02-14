@@ -56,8 +56,6 @@ function BookCard({ book, userId }: { book: IBook; userId?: string }) {
           </p>
         </div>
 
-        {/* Button always at the bottom */}
-
         <Dialog
           open={!!bookData}
           onOpenChange={(isOpen) => !isOpen && setBookData(null)}

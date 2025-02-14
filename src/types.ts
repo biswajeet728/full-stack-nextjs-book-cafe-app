@@ -12,7 +12,7 @@ export interface IUser {
 }
 
 export interface IBook {
-  _id: string; // ✅ Ensure `_id` is a string
+  _id: string;
   title: string;
   coverImg: string;
   description: string;

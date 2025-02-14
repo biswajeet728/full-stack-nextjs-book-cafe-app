@@ -24,7 +24,6 @@ import Image from "next/image";
 interface BookFormProp<T extends FieldValues> {
   defaultValues: T;
   bookId?: string;
-  //   onSubmit: (data: T) => Promise<{ success: boolean; error?: string }>;
 }
 
 function BookForm<T extends FieldValues>({
