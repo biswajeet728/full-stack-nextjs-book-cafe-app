@@ -36,12 +36,13 @@ const authenticator = async () => {
 };
 
 interface Props {
-  type: "Sign_In" | "Sign_Up" | "Create_Book";
+  type: "Sign_In" | "Sign_Up" | "Create_Book" | "Update_Book";
   formKey: string;
   onValueChange: (value: string) => void;
   accept: string;
   folder: string;
   placeHolder?: string;
+  isEditing?: boolean;
 }
 
 function ImageUpload({
@@ -51,6 +52,7 @@ function ImageUpload({
   accept,
   folder,
   placeHolder,
+  isEditing = false,
 }: Props) {
   const ikUploadRef = useRef(null);
   const [uploading, setUploading] = useState(false);
@@ -60,7 +62,6 @@ function ImageUpload({
   } | null>(null);
 
   const onError = (error: any) => {
-    console.log(error);
     setUploading(false);
 
     toast({
@@ -72,7 +73,6 @@ function ImageUpload({
 
   const onSuccess = (res: any) => {
     setUploading(false);
-    console.log(res);
     setFile(res);
     onValueChange(res.url);
 
@@ -142,21 +142,23 @@ function ImageUpload({
         </button>
       )}
 
-      <div className="mx-2">
-        {file && (
-          <>
-            {file.fileType === "image" ? (
-              <IKImage
-                alt={file.filePath!}
-                path={file.filePath!}
-                width={500}
-                height={300}
-                className="rounded-lg w-1/3 h-1/3 object-cover self-center"
-              />
-            ) : null}
-          </>
-        )}
-      </div>
+      {!isEditing && (
+        <div className="mx-2">
+          {file && (
+            <>
+              {file.fileType === "image" ? (
+                <IKImage
+                  alt={file.filePath!}
+                  path={file.filePath!}
+                  width={500}
+                  height={300}
+                  className="rounded-lg w-1/3 h-1/3 object-cover self-center"
+                />
+              ) : null}
+            </>
+          )}
+        </div>
+      )}
     </ImageKitProvider>
   );
 }

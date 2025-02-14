@@ -11,8 +11,6 @@ export async function signInNextAuthHandler(
 ) {
   const { email, password } = params;
 
-  console.log(email, password);
-
   try {
     const res = await signIn("credentials", {
       email,
@@ -41,8 +39,6 @@ export async function signInNextAuthHandler(
 
 export async function signUpHandler(params: any) {
   const { username, email, password, profileImg } = params;
-
-  console.log(username, email, password);
 
   try {
     await connectToDB();

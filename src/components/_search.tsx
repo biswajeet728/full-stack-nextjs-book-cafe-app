@@ -19,7 +19,6 @@ function SearchBar() {
   const searchBooks = async () => {
     try {
       const res = await getAllBooks(query);
-      console.log("Books:", res.books);
       setBooks(res.books as IBook[]);
     } catch (error) {
       console.log("Books All Error:", error);
@@ -46,7 +45,7 @@ function SearchBar() {
         open={!!bookData}
         onOpenChange={(isOpen) => !isOpen && setBookData(null)}
       >
-        {books.length > 0 && (
+        {query && books.length > 0 && (
           <div className="bg-dark-200 bg-opacity-95 absolute w-full top-10 rounded-sm z-10!">
             {books.map((book: IBook, index: number) => (
               <DialogTrigger asChild key={index}>
@@ -56,6 +55,7 @@ function SearchBar() {
                   onClick={(e) => {
                     setBookData(book);
                     setBooks([]);
+                    setQuery("");
                   }}
                 >
                   <p className="text-white text-[12px] md:text-sm">

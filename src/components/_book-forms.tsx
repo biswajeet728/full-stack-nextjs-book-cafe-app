@@ -43,8 +43,6 @@ function BookForm<T extends FieldValues>({
       const getBookData = async () => {
         const book = await getBook(bookId);
 
-        console.log(book, "book");
-
         if (book?.book) {
           form.reset(book.book as unknown as T);
         }
@@ -54,7 +52,6 @@ function BookForm<T extends FieldValues>({
   }, [bookId]);
 
   const handleSubmit: SubmitHandler<T> = async (data) => {
-    console.log(data, "data");
     const result = !!bookId
       ? await updateBook(bookId, data)
       : await createBook(JSON.stringify(data));
@@ -154,19 +151,13 @@ function BookForm<T extends FieldValues>({
                 accept="image/*"
                 folder="books"
                 placeHolder="Upload Book Cover Image"
-                //   onValueChange={(value) => {
-                //     console.log(value, "val");
-                //     form.setValue(
-                //       key as Path<T>,
-                //       value as unknown as T[keyof T]
-                //     );
-                //   }}
                 onValueChange={(value) => {
                   form.setValue(
                     "coverImg" as Path<T>,
                     value as unknown as T["coverImg"]
                   );
                 }}
+                isEditing={!!bookId}
               />
             </div>
 
@@ -197,19 +188,13 @@ function BookForm<T extends FieldValues>({
                 accept="application/pdf"
                 folder="books/pdfs"
                 placeHolder="Upload Book PDF"
-                //   onValueChange={(value) => {
-                //     console.log(value, "val");
-                //     form.setValue(
-                //       key as Path<T>,
-                //       value as unknown as T[keyof T]
-                //     );
-                //   }}
                 onValueChange={(value) => {
                   form.setValue(
                     "pdfFile" as Path<T>,
                     value as unknown as T["pdfFile"]
                   );
                 }}
+                isEditing={!!bookId}
               />
             </div>
 

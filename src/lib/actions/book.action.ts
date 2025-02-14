@@ -12,11 +12,7 @@ import { revalidatePath } from "next/cache";
 export const seedBooks = async () => {
   try {
     await connectToDB();
-
-    // Seed books
     const res = await Book.insertMany(dummyBooks);
-
-    console.log(res, "Books");
 
     return {
       success: true,
@@ -31,7 +27,6 @@ export const seedBooks = async () => {
 };
 
 export const getAllBooks = async (query?: string) => {
-  console.log("Query:", query);
   try {
     await connectToDB();
 
@@ -221,8 +216,7 @@ export const getBook = async (id: string) => {
 };
 
 export const updateBook = async (id: string, data: any) => {
-  const { title, coverImg, genre, description, pdfFile, isNewBook } =
-    JSON.parse(data);
+  const { title, coverImg, genre, description, pdfFile, isNewBook } = data;
 
   try {
     const session = await auth();

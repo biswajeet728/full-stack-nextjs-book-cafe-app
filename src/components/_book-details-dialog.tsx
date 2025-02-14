@@ -30,7 +30,7 @@ function BookDetails({
           />
         </div>
         <div>
-          <DialogHeader className="flex flex-col space-y-1.5 text-left">
+          <DialogHeader className="flex flex-col space-y-1.5 text-left mt-3">
             <DialogTitle className="text-white text-xl md:text-3xl font-bold">
               {bookData?.title}
             </DialogTitle>

@@ -94,7 +94,6 @@ const AuthForms = <T extends FieldValues>({
                       accept="image/*"
                       folder="users"
                       onValueChange={(value) => {
-                        console.log(value, "val");
                         form.setValue(
                           key as Path<T>,
                           value as unknown as T[keyof T]
