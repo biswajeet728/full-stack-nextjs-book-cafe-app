@@ -1,6 +1,6 @@
 "use client";
 
-import { IKImage, ImageKitProvider, IKUpload, IKVideo } from "imagekitio-next";
+import { IKImage, ImageKitProvider, IKUpload } from "imagekitio-next";
 import config from "@/lib/config";
 import { Paperclip } from "lucide-react";
 import { useRef, useState } from "react";
@@ -142,7 +142,7 @@ function ImageUpload({
         </button>
       )}
 
-      {!isEditing && (
+      {!isEditing && type !== "Create_Book" && (
         <div className="mx-2">
           {file && (
             <>

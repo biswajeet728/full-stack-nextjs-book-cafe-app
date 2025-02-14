@@ -198,7 +198,7 @@ function BookForm<T extends FieldValues>({
               />
             </div>
 
-            {form.watch("pdfFile" as Path<T>) && (
+            {!!bookId && form.watch("pdfFile" as Path<T>) && (
               <a
                 className="text-white mt-2 inline-block"
                 download
