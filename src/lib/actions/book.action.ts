@@ -67,6 +67,8 @@ export const createBook = async (data: any) => {
     JSON.parse(data);
 
   try {
+    await connectToDB();
+
     const session = await auth();
     const loggedUser = await User.findOne({ email: session?.user?.email });
 
