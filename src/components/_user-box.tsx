@@ -67,7 +67,7 @@ async function UserBox() {
               </DropdownMenuItem>
 
               <DropdownMenuItem
-                className="cursor-pointer flex items-center gap-2 mt-2"
+                className="cursor-pointer flex items-center gap-2"
                 asChild
               >
                 <Link href={"/book/new"}>

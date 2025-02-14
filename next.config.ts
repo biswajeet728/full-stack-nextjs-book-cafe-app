@@ -16,13 +16,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  webpack: (config) => {
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      mongoose: false,
-    };
-    return config;
-  },
 };
 
 export default nextConfig;

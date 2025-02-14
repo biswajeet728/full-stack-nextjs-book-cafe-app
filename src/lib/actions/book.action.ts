@@ -200,3 +200,71 @@ export const deleteBook = async (id: string) => {
     };
   }
 };
+
+export const getBook = async (id: string) => {
+  try {
+    await connectToDB();
+
+    const book = await Book.findById(id).lean();
+
+    return {
+      success: true,
+      book: JSON.parse(JSON.stringify(book)) as IBook,
+    };
+  } catch (error) {
+    console.error("Get Book Error:", error);
+    return {
+      success: false,
+      error: "Error occurred while fetching book",
+    };
+  }
+};
+
+export const updateBook = async (id: string, data: any) => {
+  const { title, coverImg, genre, description, pdfFile, isNewBook } =
+    JSON.parse(data);
+
+  try {
+    const session = await auth();
+    const loggedUser = await User.findOne({ email: session?.user?.email });
+
+    if (!loggedUser) {
+      return {
+        success: false,
+        error: "Access denied | Unauthorized",
+      };
+    }
+
+    const isUserAuthor = loggedUser.role === "author";
+
+    if (!isUserAuthor) {
+      return {
+        success: false,
+        error: "Only authors can update books",
+      };
+    }
+
+    await connectToDB();
+
+    await Book.findByIdAndUpdate(id, {
+      title,
+      coverImg,
+      genre: genre.toLowerCase(),
+      description,
+      pdfFile,
+      isNewBook,
+    }).lean();
+
+    revalidatePath("/");
+
+    return {
+      success: true,
+    };
+  } catch (error) {
+    console.error("Update Book Error:", error);
+    return {
+      success: false,
+      error: "Error occurred while updating book",
+    };
+  }
+};

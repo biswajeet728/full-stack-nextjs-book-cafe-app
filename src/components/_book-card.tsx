@@ -11,6 +11,7 @@ import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "./ui/dialog";
 import BookDetails from "./_book-details-dialog";
 import { LucideNotebookPen, Trash } from "lucide-react";
 import { deleteBook } from "@/lib/actions/book.action";
+import Link from "next/link";
 
 function BookCard({ book, userId }: { book: IBook; userId?: string }) {
   const [bookData, setBookData] = React.useState<IBook | null>(null);
@@ -92,8 +93,11 @@ function BookCard({ book, userId }: { book: IBook; userId?: string }) {
               variant="outline"
               size="icon"
               className="bg-transparent hover:bg-transparent border-green-500"
+              asChild
             >
-              <LucideNotebookPen size={22} className="text-green-500" />
+              <Link href={`/book/${book._id}`}>
+                <LucideNotebookPen size={22} className="text-green-500" />
+              </Link>
             </Button>
           </div>
           <div className="absolute top-12 right-2">

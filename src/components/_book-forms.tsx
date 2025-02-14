@@ -18,14 +18,19 @@ import { useRouter } from "next/navigation";
 import { bookSchema } from "@/lib/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "@/hooks/use-toast";
-import { createBook } from "@/lib/actions/book.action";
+import { createBook, getBook, updateBook } from "@/lib/actions/book.action";
+import Image from "next/image";
 
 interface BookFormProp<T extends FieldValues> {
   defaultValues: T;
+  bookId?: string;
   //   onSubmit: (data: T) => Promise<{ success: boolean; error?: string }>;
 }
 
-function BookForm<T extends FieldValues>({ defaultValues }: BookFormProp<T>) {
+function BookForm<T extends FieldValues>({
+  defaultValues,
+  bookId,
+}: BookFormProp<T>) {
   const router = useRouter();
 
   const form = useForm<T>({
@@ -33,9 +38,26 @@ function BookForm<T extends FieldValues>({ defaultValues }: BookFormProp<T>) {
     defaultValues: defaultValues as DefaultValues<T>,
   });
 
+  React.useEffect(() => {
+    if (!!bookId) {
+      const getBookData = async () => {
+        const book = await getBook(bookId);
+
+        console.log(book, "book");
+
+        if (book?.book) {
+          form.reset(book.book as unknown as T);
+        }
+      };
+      getBookData();
+    }
+  }, [bookId]);
+
   const handleSubmit: SubmitHandler<T> = async (data) => {
     console.log(data, "data");
-    const result = await createBook(JSON.stringify(data));
+    const result = !!bookId
+      ? await updateBook(bookId, data)
+      : await createBook(JSON.stringify(data));
 
     if (result.success) {
       toast({
@@ -148,6 +170,16 @@ function BookForm<T extends FieldValues>({ defaultValues }: BookFormProp<T>) {
               />
             </div>
 
+            {form.watch("coverImg" as Path<T>) && (
+              <Image
+                src={form.watch("coverImg" as Path<T>)}
+                alt="cover image"
+                width={100}
+                height={100}
+                className="mt-2"
+              />
+            )}
+
             {form.formState.errors.coverImg && (
               <span className="text-red-500 mt-2 inline-block">
                 {form.formState.errors.coverImg?.message?.toString()}
@@ -181,6 +213,17 @@ function BookForm<T extends FieldValues>({ defaultValues }: BookFormProp<T>) {
               />
             </div>
 
+            {form.watch("pdfFile" as Path<T>) && (
+              <a
+                className="text-white mt-2 inline-block"
+                download
+                target="_blank"
+                href={form.watch("pdfFile" as Path<T>)} // ✅ Add download link
+              >
+                See PDF
+              </a>
+            )}
+
             {form.formState.errors.pdfFile && (
               <span className="text-red-500 mt-2 inline-block">
                 {form.formState.errors.pdfFile?.message?.toString()}
@@ -196,6 +239,7 @@ function BookForm<T extends FieldValues>({ defaultValues }: BookFormProp<T>) {
           <Checkbox
             id="isNewBook"
             className="text-white bg-dark-100 border border-slate-50"
+            checked={form.watch("isNewBook" as Path<T>)}
             onCheckedChange={(value) => {
               form.setValue(
                 "isNewBook" as Path<T>,
@@ -210,7 +254,11 @@ function BookForm<T extends FieldValues>({ defaultValues }: BookFormProp<T>) {
           type="submit"
           disabled={form.formState.isSubmitting}
         >
-          {form.formState.isSubmitting ? "Plase Wait..." : "Create Book"}
+          {form.formState.isSubmitting
+            ? "Plase Wait..."
+            : !!bookId
+            ? "Update Book"
+            : "Create Book"}
         </Button>
       </form>
     </div>
