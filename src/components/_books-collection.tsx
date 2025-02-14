@@ -14,6 +14,7 @@ import {
 import BookCard from "./_book-card";
 import { Button } from "./ui/button";
 import { Session } from "next-auth";
+import Link from "next/link";
 
 function BookCollection({ books, user }: { books: IBook[]; user: Session }) {
   const getAllGenres = [...new Set(books.map((book) => book.genre))];
@@ -63,6 +64,14 @@ function BookCollection({ books, user }: { books: IBook[]; user: Session }) {
           </Button>
         )}
       </div>
+
+      {filteredBooks.length === 0 && (
+        <div>
+          <p className="text-white font-semibold text-2xl md:text-3xl mt-7">
+            No books are available at this time.
+          </p>
+        </div>
+      )}
 
       <div className="grid grid-cols-1 md:grid-cols-5 gap-8 mt-8">
         {filteredBooks.map((book: IBook, index: number) => (
