@@ -9,13 +9,46 @@ import Image from "next/image";
 import { Button } from "./ui/button";
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "./ui/dialog";
 import BookDetails from "./_book-details-dialog";
-import { LucideNotebookPen, Trash } from "lucide-react";
+import { Loader2, LucideNotebookPen, Trash } from "lucide-react";
 import { deleteBook } from "@/lib/actions/book.action";
 import Link from "next/link";
+import { toast } from "@/hooks/use-toast";
 
 function BookCard({ book, userId }: { book: IBook; userId?: string }) {
   const [bookData, setBookData] = React.useState<IBook | null>(null);
   const [isExpanded, setIsExpanded] = React.useState(false);
+  const [isPending, startTransition] = React.useTransition();
+  const [bookId, setBookId] = React.useState("");
+
+  const initAction = async (id: string) => {
+    if (isPending) {
+      toast({
+        title: "Delete action in progress",
+        description: "Please wait for the current action to complete.",
+      });
+    }
+
+    setBookId(id);
+
+    startTransition(async () => {
+      const res = await deleteBook(id);
+
+      if (res?.success) {
+        toast({
+          title: "Success",
+          description: "You have successfully deleted the book.",
+        });
+        setBookId("");
+      } else {
+        toast({
+          title: `Error deleting book`,
+          description: "An error occurred.",
+          variant: "destructive",
+        });
+        setBookId("");
+      }
+    });
+  };
 
   return (
     <Card className="border-none bg-transparent w-full h-full flex flex-col relative">
@@ -103,11 +136,16 @@ function BookCard({ book, userId }: { book: IBook; userId?: string }) {
               variant="outline"
               size="icon"
               className="bg-transparent hover:bg-transparent border-red-500"
-              onClick={async () => {
-                await deleteBook(book._id);
+              onClick={() => {
+                initAction(book._id);
               }}
+              disabled={isPending}
             >
-              <Trash size={22} className="text-red-500" />
+              {bookId === book._id ? (
+                <Loader2 className="animate-spin text-red-500" />
+              ) : (
+                <Trash size={22} className="text-red-500" />
+              )}
             </Button>
           </div>
         </div>

@@ -20,6 +20,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "@/hooks/use-toast";
 import { createBook, getBook, updateBook } from "@/lib/actions/book.action";
 import Image from "next/image";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
 
 interface BookFormProp<T extends FieldValues> {
   defaultValues: T;
@@ -31,6 +40,7 @@ function BookForm<T extends FieldValues>({
   bookId,
 }: BookFormProp<T>) {
   const router = useRouter();
+  const [isUploading, setIsUploading] = React.useState(false);
 
   const form = useForm<T>({
     resolver: zodResolver(bookSchema),
@@ -101,13 +111,55 @@ function BookForm<T extends FieldValues>({
               Genre
             </Label>
             <div className="bg-dark-200 bg-opacity-85 mt-2 rounded-md">
-              <Input
+              {/* <Input
                 id="genre"
                 type="text"
                 className="w-full text-white border-none"
                 placeholder="Enter book genre"
                 {...form.register("genre" as Path<T>)}
-              />
+              /> */}
+              <Select
+                value={form.watch("genre" as Path<T>)}
+                onValueChange={(value) => {
+                  form.setValue(
+                    "genre" as Path<T>,
+                    value as unknown as T["genre"]
+                  );
+                }}
+              >
+                <SelectTrigger className="w-full border border-dark-200 text-white">
+                  <SelectValue placeholder="Genre" className="text-white" />
+                </SelectTrigger>
+                <SelectContent className="w-full bg-dark-200 text-white border border-dark-200">
+                  <SelectGroup className="p-2">
+                    <SelectLabel>Select a Genre</SelectLabel>
+                    <SelectItem value="horror" className="capitalize">
+                      Horror
+                    </SelectItem>
+                    <SelectItem value="romance" className="capitalize">
+                      Romance
+                    </SelectItem>
+                    <SelectItem value="fiction" className="capitalize">
+                      Fiction
+                    </SelectItem>
+                    <SelectItem value="mystery" className="capitalize">
+                      Mystery
+                    </SelectItem>
+                    <SelectItem value="thriller" className="capitalize">
+                      Thriller
+                    </SelectItem>
+                    <SelectItem value="geography" className="capitalize">
+                      Geography
+                    </SelectItem>
+                    <SelectItem value="advanture" className="capitalize">
+                      Advanture
+                    </SelectItem>
+                    <SelectItem value="self-improvement" className="capitalize">
+                      Self Improvement
+                    </SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
             </div>
 
             {form.formState.errors.genre && (
@@ -149,7 +201,7 @@ function BookForm<T extends FieldValues>({
                 type={"Create_Book"}
                 accept="image/*"
                 folder="books"
-                placeHolder="Upload Book Cover Image"
+                placeHolder="Upload Book Cover Image (Max 5MB)"
                 onValueChange={(value) => {
                   form.setValue(
                     "coverImg" as Path<T>,
@@ -157,6 +209,7 @@ function BookForm<T extends FieldValues>({
                   );
                 }}
                 isEditing={!!bookId}
+                setUploading={setIsUploading}
               />
             </div>
 
@@ -186,7 +239,7 @@ function BookForm<T extends FieldValues>({
                 type={"Create_Book"}
                 accept="application/pdf"
                 folder="books/pdfs"
-                placeHolder="Upload Book PDF"
+                placeHolder="Upload Book PDF (Max 5 MB)"
                 onValueChange={(value) => {
                   form.setValue(
                     "pdfFile" as Path<T>,
@@ -194,6 +247,7 @@ function BookForm<T extends FieldValues>({
                   );
                 }}
                 isEditing={!!bookId}
+                setUploading={setIsUploading}
               />
             </div>
 
@@ -236,7 +290,7 @@ function BookForm<T extends FieldValues>({
         <Button
           className="mt-4 bg-indigo-400 hover:bg-indigo-500"
           type="submit"
-          disabled={form.formState.isSubmitting}
+          disabled={form.formState.isSubmitting || isUploading}
         >
           {form.formState.isSubmitting
             ? "Plase Wait..."

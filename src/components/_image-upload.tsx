@@ -43,6 +43,8 @@ interface Props {
   folder: string;
   placeHolder?: string;
   isEditing?: boolean;
+  uploading?: boolean;
+  setUploading?: (value: boolean) => void;
 }
 
 function ImageUpload({
@@ -53,16 +55,17 @@ function ImageUpload({
   folder,
   placeHolder,
   isEditing = false,
+  uploading = false,
+  setUploading,
 }: Props) {
   const ikUploadRef = useRef(null);
-  const [uploading, setUploading] = useState(false);
   const [file, setFile] = useState<{
     filePath: string;
     fileType?: string;
   } | null>(null);
 
   const onError = (error: any) => {
-    setUploading(false);
+    setUploading && setUploading(false);
 
     toast({
       title: `${type} upload failed`,
@@ -72,7 +75,7 @@ function ImageUpload({
   };
 
   const onSuccess = (res: any) => {
-    setUploading(false);
+    setUploading && setUploading(false);
     setFile(res);
     onValueChange(res.url);
 
@@ -96,7 +99,7 @@ function ImageUpload({
         accept={accept}
         className="hidden"
         onUploadStart={() => {
-          setUploading(true);
+          setUploading && setUploading(true);
 
           toast({
             title: "Uploading file....",
